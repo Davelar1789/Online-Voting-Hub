@@ -8,6 +8,41 @@ import Plans from '../components/Plans';
 
 
 const HomePage = () => {
+  const [statsVisible, setStatsVisible] = useState(false);
+  const [counts, setCounts] = useState({ voters: 0, candidates: 0, elections: 0, uptime: 0 });
+
+  // Simulate the statistics running number animation
+  useEffect(() => {
+    if (statsVisible) {
+      const interval = setInterval(() => {
+        setCounts((prevCounts) => {
+          const voters = prevCounts.voters < 500000 ? prevCounts.voters + 5000 : 500000;
+          const candidates = prevCounts.candidates < 2000 ? prevCounts.candidates + 20 : 2000;
+          const elections = prevCounts.elections < 100 ? prevCounts.elections + 1 : 100;
+          const uptime = prevCounts.uptime < 99 ? prevCounts.uptime + 3 : 99;
+
+          if (voters === 500000 && candidates === 2000 && elections === 100 && uptime === 99) {
+            clearInterval(interval);
+          }
+
+          return { voters, candidates, elections, uptime };
+        });
+      }, 20); // Change the speed of animation here (e.g., 20ms)
+    }
+  }, [statsVisible]);
+
+  // Fake scroll detection to trigger the statsVisible effect (you can implement this based on actual scroll position if necessary)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) { // Assuming 300px down the page shows the statistics
+        setStatsVisible(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const testimonials = [
     {
       topic: "Great Experience",
@@ -49,7 +84,8 @@ const HomePage = () => {
         <HeroContent>
           <Title>Online Election System</Title>
           <Subtitle>Vote wisely and make your voice heard.</Subtitle>
-          <ActionButton>Learn More</ActionButton>
+          <ActionButton>Demo Election</ActionButton>
+          <ActionButton>Try it Free</ActionButton>
         </HeroContent>
       </HeroContainer>
 
@@ -105,24 +141,24 @@ const HomePage = () => {
       </TestimonialCard>
     </TestimonialSection>
 
-      {/* Statistics Section */}
+      {/* Statistics Section with Running Numbers */}
       <StatisticsSection>
         <SectionTitle>Platform Statistics</SectionTitle>
         <StatsGrid>
           <StatCard>
-            <StatNumber>500K+</StatNumber>
+            <StatNumber>{counts.voters.toLocaleString()}+</StatNumber>
             <StatText>Registered Voters</StatText>
           </StatCard>
           <StatCard>
-            <StatNumber>2K+</StatNumber>
+            <StatNumber>{counts.candidates.toLocaleString()}+</StatNumber>
             <StatText>Verified Candidates</StatText>
           </StatCard>
           <StatCard>
-            <StatNumber>100+</StatNumber>
+            <StatNumber>{counts.elections}+</StatNumber>
             <StatText>Successful Elections</StatText>
           </StatCard>
           <StatCard>
-            <StatNumber>99.9%</StatNumber>
+            <StatNumber>{counts.uptime}.9%</StatNumber>
             <StatText>System Uptime</StatText>
           </StatCard>
         </StatsGrid>
@@ -205,7 +241,7 @@ const ActionButton = styled.button`
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s ease;
-
+  margin-left: 10px;
   &:hover {
     background-color: #87CEEB;
     color: black;

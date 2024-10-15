@@ -1,5 +1,4 @@
-// src/components/Header.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { FaBars } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -7,11 +6,30 @@ import { motion } from 'framer-motion';
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);  // Create a ref for the menu
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    if (menuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,25 +50,26 @@ const Header = () => {
   return (
     <HeaderContainer scrolled={scrolled}>
       <Nav>
-      <Logo>
-        <MenuButton onClick={toggleMenu}>
-          <FaBars />
-          <MenuText>Menu</MenuText>
-        </MenuButton>
-      </Logo>
-      {menuOpen && (
-        <Menu
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <MenuItem href="#">Home</MenuItem>
-          <MenuItem href="#">About</MenuItem>
-          <MenuItem href="#">Candidates</MenuItem>
-          <MenuItem href="#">Contact</MenuItem>
-        </Menu>
-      )}
-    </Nav>
+        <Logo>
+          <MenuButton onClick={toggleMenu}>
+            <FaBars />
+            <MenuText>Menu</MenuText>
+          </MenuButton>
+        </Logo>
+        {menuOpen && (
+          <Menu
+            ref={menuRef}  // Attach ref to the Menu component
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <MenuItem href="#">Home</MenuItem>
+            <MenuItem href="#">About</MenuItem>
+            <MenuItem href="#">Candidates</MenuItem>
+            <MenuItem href="#">Contact</MenuItem>
+          </Menu>
+        )}
+      </Nav>
     </HeaderContainer>
   );
 };
@@ -59,14 +78,13 @@ const Header = () => {
 const HeaderContainer = styled.header`
   position: fixed;
   width: 100%;
-  top: 50;
-  left: -10;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   padding: 30px 20px;
   z-index: 100;
   transition: background-color 0.3s ease;
-
   background-color: ${({ scrolled }) => (scrolled ? '#1f2833' : 'transparent')};
 `;
 
@@ -116,11 +134,8 @@ const MenuItem = styled.a`
   font-size: 18px;
   margin-bottom: 15px;
   &:hover {
-    color: #66fcf1;
+    color: #87CEEB;
   }
 `;
 
-
-
 export default Header;
-
