@@ -1,12 +1,48 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
 import HeroImage from '../assets/hero.jpg';  // Import the hero image
 import Secure from '../assets/secure2.jpg'; // Import the secure image
 import Profiles from '../assets/profiles.png'; // Import the secure image
 import Admins from '../assets/admins.jpg'; // Import the secure image
+import Plans from '../components/Plans';
 
 
 const HomePage = () => {
+  const testimonials = [
+    {
+      topic: "Great Experience",
+      quote: "We LOVE the product. I love the new games and new modes that come out. There’s a cool variety of games and having multiple levels make it fun.",
+      name: "Dustin Pelletier",
+    },
+    {
+      topic: "Seamless Process",
+      quote: "Voting has never been easier. The platform is user-friendly, and the results are instant.",
+      name: "Linda James",
+    },
+    {
+      topic: "Highly Secure",
+      quote: "Security was our top concern, and this platform exceeded our expectations in maintaining voter confidentiality.",
+      name: "Mark Robinson",
+    },
+    {
+      topic: "Efficient Management",
+      quote: "As an election manager, the tools provided make managing large-scale elections a breeze.",
+      name: "Sophie Anderson",
+    },
+  ];
+
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prevIndex) =>
+        prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 7000); // Auto-slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
+
   return (
     <div>
       <HeroContainer>
@@ -53,6 +89,22 @@ const HomePage = () => {
         </CardContainer>
       </CardSection>
 
+      <TestimonialSection>
+      <SectionTitle>What Our Users Say</SectionTitle>
+      <TestimonialCard>
+        <Stars>★★★★★</Stars>
+        <TestimonialContent key={currentTestimonial}>
+          <TestimonialTopic>{testimonials[currentTestimonial].topic}</TestimonialTopic>
+          <Quote>{`"${testimonials[currentTestimonial].quote}"`}</Quote>
+          <Name>{testimonials[currentTestimonial].name}</Name>
+        </TestimonialContent>
+        <Navigation>
+          <Arrow onClick={() => setCurrentTestimonial(currentTestimonial === 0 ? testimonials.length - 1 : currentTestimonial - 1)}>&lt;</Arrow>
+          <Arrow onClick={() => setCurrentTestimonial(currentTestimonial === testimonials.length - 1 ? 0 : currentTestimonial + 1)}>&gt;</Arrow>
+        </Navigation>
+      </TestimonialCard>
+    </TestimonialSection>
+
       {/* Statistics Section */}
       <StatisticsSection>
         <SectionTitle>Platform Statistics</SectionTitle>
@@ -98,6 +150,7 @@ const HomePage = () => {
           </BenefitItem>
         </BenefitsList>
       </SectionContainer>
+      <Plans />
     </div>
   );
 };
@@ -278,5 +331,81 @@ const BenefitText = styled.p`
   font-size: 1.1rem;
   color: #c5c6c7;
 `;
+
+const slideIn = keyframes`
+  0% {
+    transform: translateX(20%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
+
+// Testimonial section styling
+const TestimonialSection = styled.div`
+  padding: 60px 20px;
+  background-color: #f2f2f2;
+  text-align: center;
+`;
+
+
+
+const TestimonialCard = styled.div`
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1f2833;
+  border-radius: 8px;
+  color: #c5c6c7;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const Stars = styled.div`
+  font-size: 1.5rem;
+  color: #ffd700;
+  margin-bottom: 10px;
+`;
+
+const TestimonialContent = styled.div`
+  animation: ${slideIn} 1s ease-in-out;
+`;
+
+const TestimonialTopic = styled.h3`
+  font-size: 1.5rem;
+  color: #87CEEB;
+`;
+
+const Quote = styled.p`
+  font-size: 1.1rem;
+  margin: 20px 0;
+`;
+
+const Name = styled.p`
+  font-size: 1rem;
+  color: #666;
+`;
+
+const Navigation = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
+
+const Arrow = styled.button`
+  background: none;
+  border: none;
+  color: #87CEEB;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #ffd700;
+  }
+`;
+
 
 export default HomePage;
