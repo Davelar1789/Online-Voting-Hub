@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import HeroImage from '../assets/hero.jpg';  // Import the hero image
+import HeroImage from '../assets/hero3.jpg';  // Import the hero image
 import Secure from '../assets/secure2.jpg'; // Import the secure image
 import Profiles from '../assets/profiles.png'; // Import the secure image
 import Admins from '../assets/admins.jpg'; // Import the secure image
@@ -157,18 +157,33 @@ const HomePage = () => {
 
 // Hero section styling
 const HeroContainer = styled.div`
+  position: relative;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(${HeroImage});  /* Use the imported image */
+  background-image: url(${HeroImage});
   background-size: cover;
   background-position: center;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay with transparency */
+    filter: blur(2px); /* Optional blur */
+    z-index: 0;
+  }
 `;
 
 const HeroContent = styled.div`
   text-align: center;
+  z-index: 1; /* Ensure the content is above the overlay */
 `;
+
 
 const Title = styled.h1`
   font-size: 3rem;
