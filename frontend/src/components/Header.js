@@ -65,8 +65,8 @@ const Header = () => {
           >
             <MenuItem href="#">Home</MenuItem>
             <MenuItem href="#">About</MenuItem>
-            <MenuItem href="#">Candidates</MenuItem>
-            <MenuItem href="#">Contact</MenuItem>
+            <MenuItem href="#">Contact Us</MenuItem>
+            <MenuItem href="#">Login</MenuItem>
           </Menu>
         )}
       </Nav>
