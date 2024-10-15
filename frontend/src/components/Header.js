@@ -79,7 +79,7 @@ const HeaderContainer = styled.header`
   position: fixed;
   width: 100%;
   top: 0;
-  left: 0;
+  left: -20px;
   display: flex;
   align-items: center;
   padding: 30px 20px;
