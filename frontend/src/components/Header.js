@@ -54,6 +54,11 @@ const Header = () => {
     navigate('/login');
   };
 
+  const handleHomeClick = () => {
+    navigate('/');
+  };
+
+
   return (
     <HeaderContainer scrolled={scrolled}>
       <Nav>
@@ -70,7 +75,7 @@ const Header = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <MenuItem href="#">Home</MenuItem>
+            <MenuItem onClick={handleHomeClick}>Home</MenuItem>
             <MenuItem href="#">About</MenuItem>
             <MenuItem href="#">Contact Us</MenuItem>
             <MenuItem onClick={handleLoginClick}>Login</MenuItem> {/* Add onClick for login */}
