@@ -8,7 +8,8 @@ const plans = [
     price: '$0/month',
     description: 'Essential tools for small-scale elections',
     benefits: [
-      'Secure voting platform',
+        'Up to 20 voters',
+        'Secure voting platform',
       'Basic candidate management',
       'Real-time voting results',
       'Voter registration management'
@@ -18,7 +19,8 @@ const plans = [
     title: 'Advanced Voting Plan',
     price: '$10/month',
     description: 'Expanded features for larger elections',
-    benefits: [
+    benefits: [,
+        'Up to 100 voters',
       'Secure voting platform',
       'Advanced analytics and reporting',
       'Enhanced voter registration and authentication',
