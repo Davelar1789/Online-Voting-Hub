@@ -19,7 +19,7 @@ const plans = [
     title: 'Advanced Voting Plan',
     price: '$10/month',
     description: 'Expanded features for larger elections',
-    benefits: [,
+    benefits: [
         'Up to 100 voters',
       'Secure voting platform',
       'Advanced analytics and reporting',

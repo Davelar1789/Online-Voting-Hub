@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { FaBars } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);  // Create a ref for the menu
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -47,6 +49,11 @@ const Header = () => {
     };
   }, []);
 
+  // Function to handle navigation to /login
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
   return (
     <HeaderContainer scrolled={scrolled}>
       <Nav>
@@ -66,7 +73,7 @@ const Header = () => {
             <MenuItem href="#">Home</MenuItem>
             <MenuItem href="#">About</MenuItem>
             <MenuItem href="#">Contact Us</MenuItem>
-            <MenuItem href="#">Login</MenuItem>
+            <MenuItem onClick={handleLoginClick}>Login</MenuItem> {/* Add onClick for login */}
           </Menu>
         )}
       </Nav>
@@ -133,6 +140,7 @@ const MenuItem = styled.a`
   text-decoration: none;
   font-size: 18px;
   margin-bottom: 15px;
+  cursor: pointer;
   &:hover {
     color: #87CEEB;
   }
