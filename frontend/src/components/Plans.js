@@ -5,7 +5,7 @@ import CheckIcon from '@mui/icons-material/Check';
 const plans = [
   {
     title: 'Basic Voting Plan',
-    price: '$0/month',
+    price: '$0/poll',
     description: 'Essential tools for small-scale elections',
     benefits: [
         'Up to 20 voters',
@@ -17,7 +17,7 @@ const plans = [
   },
   {
     title: 'Advanced Voting Plan',
-    price: '$10/month',
+    price: '$5/poll',
     description: 'Expanded features for larger elections',
     benefits: [
         'Up to 100 voters',
@@ -30,7 +30,7 @@ const plans = [
   },
   {
     title: 'Enterprise Voting Plan',
-    price: '$50/month',
+    price: '$15/poll',
     description: 'Unlimited features for large-scale elections',
     benefits: [
       'Unlimited voters and candidates',
